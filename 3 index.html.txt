@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صاصا ❤️ شوشو</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #1a0033, #ff4d6d);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* قلوب */
+.heart {
+  position: fixed;
+  animation: floatUp 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* عنوان */
+.names {
+  font-size: 40px;
+  margin-top: 20px;
+}
+
+/* صور */
+.gallery img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+/* عداد */
+#counter {
+  margin: 20px;
+  font-size: 20px;
+}
+
+/* أزرار */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #ff4d6d;
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+
+/* رسالة */
+#loveMessage {
+  display: none;
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1 class="names">صاصا ❤️ شوشو</h1>
+
+<!-- صور -->
+<div class="gallery">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?w=400">
+</div>
+
+<!-- رسالة -->
+<div id="randomMessage"></div>
+
+<!-- عداد -->
+<div id="counter"></div>
+
+<!-- زر بحبك -->
+<button onclick="addLove()">❤️ بحبك ❤️</button>
+<div id="loveCounter">0 ❤️</div>
+
+<!-- أزرار -->
+<div>
+  <button onclick="toggleMusic()">🎵 موسيقى</button>
+  <button onclick="showMessage()">💌 رسالة</button>
+  <button onclick="surprise()">😏 مفاجأة</button>
+  <button onclick="fireworks()">🎆 ألعاب نارية</button>
+</div>
+
+<div id="loveMessage">
+  من يوم 14/12/2023 ❤️<br>
+  وأنا بحبك أكتر كل يوم 💖
+</div>
+
+<!-- موسيقى رومانسية -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* تشغيل الصوت */
+const music = document.getElementById("music");
+document.body.addEventListener("click", () => {
+  music.play().catch(()=>{});
+}, { once: true });
+
+/* العداد */
+const startDate = new Date("2023-12-14");
+
+function updateCounter() {
+  const diff = Date.now() - startDate.getTime();
+  const sec = Math.floor(diff/1000);
+  const d = Math.floor(sec/86400);
+  const h = Math.floor((sec%86400)/3600);
+  const m = Math.floor((sec%3600)/60);
+  const s = sec%60;
+
+  document.getElementById("counter").innerHTML =
+  `${d} يوم - ${h} ساعة - ${m} دقيقة - ${s} ثانية`;
+}
+
+setInterval(updateCounter,1000);
+updateCounter();
+
+/* رسائل */
+const msgs = [
+"بحبك ❤️",
+"أنتِ حياتي 💖",
+"أجمل حاجة في حياتي 🌹",
+"معاك الدنيا أحلى 💕",
+"وجودك في حياتي نعمة ❤️"
+];
+
+function randomMsg(){
+  document.getElementById("randomMessage").innerText =
+  msgs[Math.floor(Math.random()*msgs.length)];
+}
+setInterval(randomMsg,3000);
+randomMsg();
+
+/* زر بحبك */
+let love=0;
+function addLove(){
+  love++;
+  document.getElementById("loveCounter").innerText = love+" ❤️";
+
+  for(let i=0;i<10;i++){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+}
+
+/* موسيقى */
+function toggleMusic(){
+  if(music.paused) music.play();
+  else music.pause();
+}
+
+/* رسالة */
+function showMessage(){
+  const m=document.getElementById("loveMessage");
+  m.style.display = m.style.display=="block"?"none":"block";
+}
+
+/* مفاجأة */
+function surprise(){
+  alert("بحبك جدًا ❤️");
+}
+
+/* ألعاب نارية */
+function fireworks(){
+  for(let i=0;i<50;i++){
+    setTimeout(()=>{
+      const f=document.createElement("div");
+      f.innerHTML="✨";
+      f.style.position="fixed";
+      f.style.left=Math.random()*100+"vw";
+      f.style.top=Math.random()*100+"vh";
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(),2000);
+    },i*20);
+  }
+}
+
+/* قلوب مستمرة */
+function createHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💕";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),4000);
+}
+setInterval(createHeart,800);
+
+</script>
+
+</body>
+</html>
